@@ -19,10 +19,16 @@
             android:layout_height="wrap_content"
             android:text="Button" />
 
+        <!--<TextView-->
+            <!--android:id="@+id/textViewcpuUsage"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="272dp"-->
+            <!--android:text="TextView" />-->
+
         <TextView
-            android:id="@+id/textViewcpuUsage"
+            android:id="@+id/textViewProcessUsage"
             android:layout_width="match_parent"
             android:layout_height="272dp"
-            android:text="TextView" />
+            android:text="Process Usage List" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
