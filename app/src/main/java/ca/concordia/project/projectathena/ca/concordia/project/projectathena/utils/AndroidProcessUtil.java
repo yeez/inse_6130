@@ -10,14 +10,12 @@ public class AndroidProcessUtil {
 
     private static final String CMD_TOP = "top -m 1 -d 1 -n 1";
     private static final String CMD_KILL = "kill -9 ";
-    private static String output = "";
+    private static final byte[] byteArray = new byte[1024];
     private static InputStream inputStream;
     private static Process process;
 
     public static String getProcessUsage() {
-
-        byte[] byteArray;
-        byteArray = new byte[1024];
+        String output = "";
         try {
             process = Runtime.getRuntime().exec(CMD_TOP);
             inputStream = process.getInputStream();
@@ -37,6 +35,6 @@ public class AndroidProcessUtil {
     }
 
     public static void killSelectedProcess(AndroidProcess androidProcess) throws IOException {
-        process = Runtime.getRuntime().exec(CMD_KILL + androidProcess.getPid());
+        Runtime.getRuntime().exec(CMD_KILL + androidProcess.getPid());
     }
 }

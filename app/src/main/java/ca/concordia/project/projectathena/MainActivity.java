@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -15,8 +18,8 @@ import ca.concordia.project.projectathena.ca.concordia.project.projectathena.uti
 
 public class MainActivity extends AppCompatActivity {
 
-//    private TextView textViewcpuUsage;
-    private TextView textViewProcessUsage;
+    private boolean loop;
+
     private Button buttonTurnOnProtection;
 
     @Override
@@ -24,30 +27,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TextView
-//        textViewcpuUsage = (TextView) findViewById(R.id.textViewcpuUsage);
-//        textViewcpuUsage.setMovementMethod(new ScrollingMovementMethod());
-
-        textViewProcessUsage = (TextView) findViewById(R.id.textViewProcessUsage);
-        textViewProcessUsage.setMovementMethod(new ScrollingMovementMethod());
-
-        //Buttom
         buttonTurnOnProtection = (Button) findViewById(R.id.buttonTurnOnProtection);
         buttonTurnOnProtection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonTurnOnProtection.setText("IT IS ON!!!!!!!!!");
-                AndroidProcess androidProcess = ParserUtil.parseProcess(AndroidProcessUtil.getProcessUsage());
-                if(AndroidProcessUtil.isProcessIsMalicious(androidProcess)) {
-                    try {
-                        AndroidProcessUtil.killSelectedProcess(androidProcess);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                //textViewProcessUsage.setText();
+                loop = true;
+               startDefense();
             }
         });
+    }
+
+    public void startDefense(){
+        while(loop){
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            AndroidProcess androidProcess = ParserUtil.parseProcess(AndroidProcessUtil.getProcessUsage());
+            if(AndroidProcessUtil.isProcessIsMalicious(androidProcess)) {
+                loop = false; //Stop the loop
+                try {
+                    AndroidProcessUtil.killSelectedProcess(androidProcess);
+                    Toast.makeText(getApplicationContext(), "Treat detected, high CPU Usage, killing CPU Process...",
+                            Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                   startDefense();
+                }
+            }
+
+        }
+
     }
 
 }
