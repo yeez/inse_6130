@@ -17,8 +17,8 @@ public class ParserUtil {
             String[] baseStringArray = firstChunk.split(" ");
             pid = Integer.parseInt(baseStringArray[0].trim());
             user = baseStringArray[1];
-            cpuUsage = Double.parseDouble(!baseStringArray[16].isEmpty() ? baseStringArray[16] : baseStringArray[15]);
-            memoryUsage = Double.parseDouble(!baseStringArray[18].isEmpty() ? baseStringArray[18] : baseStringArray[19]);
+            cpuUsage = Double.parseDouble(!baseStringArray[17].isEmpty() ? baseStringArray[17] : !baseStringArray[16].isEmpty() ? baseStringArray[16] : baseStringArray[15]);
+            memoryUsage = Double.parseDouble(!baseStringArray[20].isEmpty() ? baseStringArray[20] : !baseStringArray[19].isEmpty() ? baseStringArray[19] : baseStringArray[18]);
             processName = baseStringArray[23].split("\\+")[0];
 
             return new AndroidProcess(pid, user, cpuUsage, memoryUsage, processName);

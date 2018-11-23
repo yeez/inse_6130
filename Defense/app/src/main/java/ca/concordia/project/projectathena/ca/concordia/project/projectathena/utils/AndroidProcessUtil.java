@@ -31,7 +31,7 @@ public class AndroidProcessUtil {
     }
 
     public static boolean isProcessIsMalicious(AndroidProcess androidProcess){
-        return androidProcess.getCpuUsage() >= 100.0 || androidProcess.getMemoryUsage() > 9.0;
+        return androidProcess.getCpuUsage() >= 8.0 || androidProcess.getMemoryUsage() > 8.0;
     }
 
     public static void killSelectedProcess(AndroidProcess androidProcess) throws IOException {

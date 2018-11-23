@@ -13,6 +13,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
 
+    private final static String CPU_STRESS = "dd if=/dev/zero of=/dev/null";
+
     private Button btnClick;
     private TextView lblDesc;
     private static final Random RANDOM = new Random();
@@ -34,21 +36,10 @@ public class MainActivity extends AppCompatActivity {
                         int i = 0;
                         while(true){
                             try {
-                                System.out.println("Runtime");
-                                Runtime rt = Runtime.getRuntime();
-                                Process process = rt.exec("sh");
-                                DataOutputStream os = new DataOutputStream(process.getOutputStream());
-                                os.writeBytes("dd if=/dev/zero of=/dev/null" + "\n");
-                                os.flush();
-                                os.writeBytes("exit\n");
-                                os.flush();
-                                process.waitFor();
+                                Runtime.getRuntime().exec(CPU_STRESS);
                             } catch (IOException e) {
                                 //log errors
                                 System.out.println("IOException" + e.getMessage());
-                            } catch (InterruptedException e) {
-                                //log errors
-                                System.out.println("InterruptedException" + e.getMessage());
                             }
                         }
                     }
