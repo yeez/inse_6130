@@ -1,17 +1,14 @@
 package com.example.aamirah.testandroid41;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends Activity {
 
     private final static String CPU_STRESS = "dd if=/dev/zero of=/dev/null";
 
@@ -45,11 +42,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 t.start();
+
             }
         });
     }
 
+
     private static int generateRandomNumber(){
       return RANDOM.nextInt(80 - 65) + 65;
+
     }
 }
